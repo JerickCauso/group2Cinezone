@@ -14,24 +14,27 @@ function nowPlaying() {
   )
     .then((res) => res.json())
     .then((resdata) => {
-      const nowPlayingDisplay = "";
+      let nowPlayingDisplay = "";
       console.log(resdata);
       let display2 = resdata.results;
       display2.forEach((nowPlayingMovies) => {
-        const nowPlayingDisplay = document.querySelector(".swiper-wrapper");
+        nowPlayingDisplay = document.querySelector(".swiper-wrapper");
 
-        nowPlayingDisplay.innerHTML = `
+        nowPlayingDisplay.innerHTML += `
+        
         <div class="swiper-slide">
-        <a href="movie-details.html?id=1">
+        <a href="movie-details.html?id=${nowPlayingMovies.id}">
           <img
             src="https://image.tmdb.org/t/p/w500${nowPlayingMovies.poster_path}"
             alt="${nowPlayingMovies.title}"
           />
         </a>
         <h4 class="swiper-rating">
-          <i class="fas fa-star text-secondary"></i> 8 / 10
+          <i class="fas fa-star text-secondary"></i> ${nowPlayingMovies.vote_average} / 10
         </h4>
-      </div>`;
+        </div>
+        
+        `;
       });
     });
 }
@@ -60,7 +63,7 @@ function moviesPopular() {
 
         popMovieDisplay.innerHTML += `
       <div class="card">
-              <a href="movie-details.html?id=1">
+              <a href="movie-details.html?id=${popMovies.id}">
                 <img
                   src="https://image.tmdb.org/t/p/w500${popMovies.poster_path}"
                   class="card-img-top"
