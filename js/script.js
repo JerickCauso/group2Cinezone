@@ -15,8 +15,7 @@ function displaySlider() {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYzk1MGMyMTIxZmFmZmJjOWJiNDdiZTA5OGJjYTRiNyIsInN1YiI6IjY0NWRjNzg4ZDZjMzAwMDBlNGFkZDk0MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RwfMqTC9PkV48DzR2G3dEPO6N5FFfhi3Nm9FT4RSdPY",
+      Authorization: "2c950c2121faffbc9bb47be098bca4b7",
     },
   };
   fetch(
@@ -162,15 +161,15 @@ function tvShows() {
     },
   };
   fetch(
-    "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1",
+    "https://api.themoviedb.org/3/discover/tv?include_adult=true&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc",
     options
   )
     .then((response) => response.json())
     .then((responsedata) => {
       // let tvShowDisplay = "";
-      console.log(responsedata);
-      let show = responsedata.results;
-      show.forEach((shows) => {
+      let shows = responsedata.results;
+      console.log(shows);
+      shows.forEach((show) => {
         const div = document.createElement("div");
         const tvShowDisplay = document
           .getElementById("popular-shows")
@@ -178,17 +177,17 @@ function tvShows() {
 
         tvShowDisplay.innerHTML += `
       <div class="card">
-              <a href="tv-details.html?id=${shows.id}">
+              <a href="tv-details.html?id=${show.id}">
                 <img
-                  src="https://image.tmdb.org/t/p/w500${shows.poster_path}"
+                  src="https://image.tmdb.org/t/p/w500${show.poster_path}"
                   class="card-img-top"
-                  alt="${shows.title}"
+                  alt="${show.name}"
                 />
               </a>
               <div class="card-body">
-                <h5 class="card-title">${shows.title}</h5>
+                <h5 class="card-title">${show.name}</h5>
                 <p class="card-text">
-                  <small class="text-muted">Release: ${shows.release_date} </small>
+                  <small class="text-muted">Release: ${show.first_air_date} </small>
                 </p>
               </div>
             </div>`;
@@ -267,7 +266,7 @@ function tvShowDetails() {
       // const show = responsedata.results;
       const div = document.createElement("div");
       const nowPlaying = document
-        .querySelector("#movie-details")
+        .querySelector("#show-details")
         .appendChild(div);
 
       div.innerHTML = `
@@ -280,7 +279,7 @@ function tvShowDetails() {
         />
       </div>
       <div>
-        <h2>${responsedata.original_title}</h2>
+        <h2>${responsedata.name}</h2>
         <p>
           <i class="fas fa-star text-primary"></i>
           8 / 10
