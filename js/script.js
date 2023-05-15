@@ -211,6 +211,7 @@ function movieDetails() {
     });
 }
 
+//tvShow Details
 function tvShowDetails() {
   const showId = window.location.search.split("=")[1];
 
@@ -259,6 +260,62 @@ function tvShowDetails() {
     });
 }
 
+//Search
+function search() {
+  const searchForm = document.getElementById(".search-term");
+  const searchInput = document.querySelector("search-flex");
+
+  searchForm.addEventListener("submit", async (event) => {
+    // event.preventDefault();
+
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYzk1MGMyMTIxZmFmZmJjOWJiNDdiZTA5OGJjYTRiNyIsInN1YiI6IjY0NWRjNzg4ZDZjMzAwMDBlNGFkZDk0MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RwfMqTC9PkV48DzR2G3dEPO6N5FFfhi3Nm9FT4RSdPY",
+      },
+    };
+    const searchTerm = searchInput.value;
+
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/search/movie?query=${searchTerm}&language=en-US&page=1&include_adult=false`,
+        options
+      );
+
+      const moviesData = await response.json();
+
+      const displayMovies = moviesData.results.map((movie) => {
+        return `
+        <div class="card">
+          <a href="movie-details.html?id=${movie.id}">
+            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" class="card-img-top" alt="Movie Title"/>
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">${movie.title}</h5>
+            <p class="card-text">
+              <small class="text-muted">Released: ${movie.release_date}</small>
+            </p>
+            <p class="card-text">
+              <small class="text-muted">${movie.vote_average}</small>
+            </p>
+            <p class="card-text">
+              <small class="text-muted">${movie.genre_ids}</small>
+            </p>
+          </div>
+        </div>
+      `;
+      });
+
+      document.getElementById("popular-movies").innerHTML =
+        displayMovies.join("");
+    } catch (error) {
+      console.error(error);
+    }
+  });
+}
+
 // Display Backdrop
 function displayBackdrop(type, backgroundPath) {
   const overlayDiv = document.createElement("div");
@@ -281,6 +338,7 @@ function displayBackdrop(type, backgroundPath) {
   }
 }
 
+//Initialize
 function init() {
   switch (pageSet.currentPage) {
     case "/":
@@ -298,7 +356,7 @@ function init() {
       tvShowDetails();
       break;
     case "/search.html":
-      // search();
+      search();
       break;
   }
 }
