@@ -38,8 +38,7 @@ function displaySlider() {
       </a>
       <h4 class="swiper-rating">
         <i class="fas fa-star text-secondary"></i> ${nowPlayingMovies.vote_average} / 10
-      </h4>
-    `;
+      </h4>`;
 
         document.querySelector(".swiper-wrapper").appendChild(div);
 
@@ -71,43 +70,6 @@ function initSwiper() {
     },
   });
 }
-
-//Now PLaying
-// function nowPlaying() {
-//   const options = {
-//     method: "GET",
-//     headers: {
-//       accept: "application/json",
-//       Authorization:
-//         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYzk1MGMyMTIxZmFmZmJjOWJiNDdiZTA5OGJjYTRiNyIsInN1YiI6IjY0NWRjNzg4ZDZjMzAwMDBlNGFkZDk0MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RwfMqTC9PkV48DzR2G3dEPO6N5FFfhi3Nm9FT4RSdPY",
-//     },
-//   };
-//   fetch(
-//     "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
-//     options
-//   )
-//     .then((response) => response.json())
-//     .then((responsedata) => {
-//       let nowPlaying = "";
-//       // console.log(responsedata);
-//       let display = responsedata.results;
-//       display.forEach((nowPlayingMovies) => {
-//         const div = document.createElement("div");
-//         const nowPlaying = document
-//           .querySelector(".swiper-wrapper")
-//           .appendChild(div);
-
-//         nowPlaying.innerHTML += `
-//       <a href="movie-details.html?id=${nowPlayingMovies.id}">
-//         <img src="https://image.tmdb.org/t/p/w200${nowPlayingMovies.poster_path}" alt="${nowPlayingMovies.title}" />
-//       </a>
-//       <h4 class="swiper-rating">
-//         <i class="fas fa-star text-secondary"></i> ${nowPlayingMovies.vote_average} / 10
-//       </h4>
-//     `;
-//       });
-//     });
-// }
 
 //Popular Movies
 function moviesPopular() {
@@ -178,20 +140,19 @@ function tvShows() {
 
         tvShowDisplay.innerHTML += `
       <div class="card">
-              <a href="tv-details.html?id=${show.id}">
-                <img
-                  src="https://image.tmdb.org/t/p/w500${show.poster_path}"
-                  class="card-img-top"
-                  alt="${show.name}"
-                />
-              </a>
-              <div class="card-body">
-                <h5 class="card-title">${show.name}</h5>
-                <p class="card-text">
-                  <small class="text-muted">Release: ${show.first_air_date} </small>
-                </p>
-              </div>
-            </div>`;
+          <a href="tv-details.html?id=${show.id}">
+              <img
+                src="https://image.tmdb.org/t/p/w500${show.poster_path}"
+                class="card-img-top"
+                alt="${show.name}"/>
+          </a>
+            <div class="card-body">
+              <h5 class="card-title">${show.name}</h5>
+              <p class="card-text">
+                <small class="text-muted">Release: ${show.first_air_date} </small>
+              </p>
+            </div>
+      </div>`;
       });
     });
 }
@@ -231,7 +192,7 @@ function movieDetails() {
         <h2>${responsedata.original_title}</h2>
         <p>
           <i class="fas fa-star text-primary"></i>
-          8 / 10
+          ${responsedata.vote_average} / 10
         </p>
         <p class="text-muted">Release Date: ${responsedata.release_date}</p>
         <p>
@@ -272,27 +233,25 @@ function tvShowDetails() {
 
       div.innerHTML = `
       <div class="details-top">
-      <div>
-        <img
-          src="https://image.tmdb.org/t/p/w500${responsedata.poster_path}"
-          class="card-img-top"
-          alt="Movie Title"
-        />
-      </div>
-      <div>
-        <h2>${responsedata.name}</h2>
-        <p>
-          <i class="fas fa-star text-primary"></i>
-          8 / 10
-        </p>
-        <p class="text-muted">Release Date: ${responsedata.release_date}</p>
-        <p>
-        ${responsedata.overview}
-        </p>
-        <h5>Genres</h5>
-        <ul class="list-group">
-        </ul>
-        <a href="${responsedata.homepage}" target="_blank" class="btn">Visit Movie Homepage</a>
+        <div>
+          <img
+            src="https://image.tmdb.org/t/p/w500${responsedata.poster_path}"
+            class="card-img-top"
+            alt="Movie Title"/>
+        </div>
+        <div>
+          <h2>${responsedata.name}</h2>
+          <p>
+            <i class="fas fa-star text-primary">${responsedata.vote_average} / 10</i>
+          </p>
+          <p class="text-muted">Release Date: ${responsedata.release_date}</p>
+          <p>
+          ${responsedata.overview}
+          </p>
+          <h5>Genres</h5>
+          <ul class="list-group">
+          </ul>
+          <a href="${responsedata.homepage}" target="_blank" class="btn">Visit Movie Homepage</a>
       </div>
     </div>`;
     });
